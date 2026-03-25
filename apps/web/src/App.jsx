@@ -36,6 +36,7 @@ function ChatApp() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const composerRef = useRef(null);
+  const messagesRef = useRef(null);
 
   const history = useMemo(() => {
     return messages
@@ -56,6 +57,13 @@ function ChatApp() {
       composerRef.current?.focus();
     }
   }, [loading]);
+
+  useEffect(() => {
+    const container = messagesRef.current;
+    if (!container) return;
+
+    container.scrollTop = container.scrollHeight;
+  }, [messages, loading]);
 
   function focusComposerSoon() {
     requestAnimationFrame(() => {
@@ -145,7 +153,7 @@ function ChatApp() {
           </div>
         </header>
 
-        <div className="messages">
+        <div className="messages" ref={messagesRef}>
           {messages.map((message, index) => (
             <Message key={`${message.role}-${index}`} message={message} />
           ))}

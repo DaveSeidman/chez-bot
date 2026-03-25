@@ -13,6 +13,12 @@ body {
   margin: 0;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 button,
 textarea,
 input {
@@ -20,8 +26,9 @@ input {
 }
 
 .app-shell {
-  min-height: 100vh;
+  height: 100dvh;
   background: #f3f1ec;
+  overflow: hidden;
 }
 
 .chat-title {
@@ -38,11 +45,12 @@ input {
 .chat-area {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .admin-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr;
 }
@@ -84,8 +92,11 @@ input {
   padding: 24px;
   display: grid;
   gap: 14px;
+  min-height: 0;
   align-content: start;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .message {
@@ -185,6 +196,9 @@ input {
   border-top: 1px solid #d7d1c5;
   background: #f9f6f0;
   padding: 18px 24px 24px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
 }
 
 .composer-input {
