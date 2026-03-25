@@ -1,0 +1,171 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: #f3f1ec;
+  color: #1d1d1d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: #f3f1ec;
+}
+
+.chat-title {
+  margin: 0 0 10px;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.chat-copy,
+.message-role {
+  color: #5f5a52;
+}
+
+.chat-area {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.chat-header {
+  padding: 24px;
+  border-bottom: 1px solid #d7d1c5;
+  background: rgba(249, 246, 240, 0.92);
+  display: grid;
+  gap: 20px;
+}
+
+.chat-copy {
+  margin: 0;
+  max-width: 720px;
+  line-height: 1.5;
+}
+
+.messages {
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 840px;
+  border-radius: 16px;
+  padding: 14px 16px;
+  border: 1px solid #ddd5c8;
+}
+
+.message-user {
+  background: #fff8dc;
+  justify-self: end;
+}
+
+.message-assistant {
+  background: #ffffff;
+  justify-self: start;
+}
+
+.message-role {
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.message-sources {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  background: #efe9de;
+  border: 1px solid #d7d1c5;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.loading-row {
+  color: #5f5a52;
+  padding: 12px 4px;
+}
+
+.composer {
+  border-top: 1px solid #d7d1c5;
+  background: #f9f6f0;
+  padding: 18px 24px 24px;
+}
+
+.composer-input {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  border-radius: 14px;
+  border: 1px solid #cfc7ba;
+  padding: 14px;
+  background: #fff;
+}
+
+.composer-footer {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.send-button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: #1d1d1d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.send-button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.error-text {
+  margin-top: 10px;
+  color: #a32626;
+}
+
+@media (max-width: 960px) {
+  .chat-header {
+    padding: 18px;
+  }
+
+  .messages {
+    padding: 18px;
+  }
+
+  .composer {
+    padding: 16px 18px 20px;
+  }
+}

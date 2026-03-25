@@ -1,0 +1,156 @@
+[
+  {
+    "id": "park-slope-food-coop",
+    "type": "store",
+    "storeName": "Park Slope Food Coop",
+    "location": "Union Street",
+    "aliases": ["park slope coop", "park slope food coop", "psfc", "coop", "union street coop"],
+    "topics": ["delivery", "parking", "invoice", "hygiene", "fridge", "shelves", "salads"],
+    "facts": {
+      "deliveryDays": "Every day except Sunday",
+      "volume": "Usually 60 to 100 salads per day",
+      "bestArrival": "Before 8:00 AM",
+      "invoice": "Hand to full-time employee in receiving room, or leave on desk with tape and markers if no one is there"
+    },
+    "content": "Arrive before 8:00 AM whenever possible, before the Coop opens. Park as close as possible, but never use any spots reserved for the fire station. Use a u-boat if available; if not, use a Hollywood, the smaller rolling cart. Bags can be stacked only if the bottom bag is completely full, meaning 30 salads. For hygiene reasons, never place a bag containing salads directly on the floor. Keep bags on the u-boat or Hollywood until they are empty. Once a bag is empty, it is fine to place it on the floor. Bring the salads in through the service entrance using the middle-most gate, where there are usually other u-boats and a lot of people coming and going. Go through the plastic flap door. The grab-and-go fridge will be directly in front of you. If someone is stocking sushi, wait until they are finished. If someone is stocking tacos, ask whether you can jump in ahead of them to stock the salads. Use the 3rd and 4th shelves from the top. Stack the salads 3 high, 3 deep, and 5 across. Try to keep the same salad types together. Standard layout: Salmon usually goes on top because it is the most popular. Use 4 rows of Salmon, then use Vegan or Plain for the 5th row. Chicken goes below that. Use 4 rows of Chicken, then use Vegan or Plain on the right as the 5th row. When stocking is complete, hand the invoice to any full-time employee in the receiving room. If no one is there, leave the invoice on the desk with the tape and markers. Before leaving, check the shelf above the desk in the receiving room for any extra Chez Chrystelle bags. Return the u-boat to the street where you found it. Deliveries go here every day except Sunday. They usually receive 60 to 100 salads per day."
+  },
+  {
+    "id": "key-food-5th-ave",
+    "type": "store",
+    "storeName": "Key Food 5th Avenue",
+    "location": "5th Avenue and Prospect Avenue",
+    "aliases": ["key food 5th", "5th avenue key food", "key food prospect", "5th ave key food"],
+    "topics": ["delivery", "deli counter", "invoice", "bags", "contacts"],
+    "facts": {
+      "opening": "Usually staffed from 6:30 AM on",
+      "invoice": "Leave invoice next to the salads",
+      "contacts": "Javier the manager; Francesco handles ordering"
+    },
+    "content": "They are usually there from 6:30 AM on. If you get there early, knock on the door and someone will usually come. Bring the bag to the deli counter in the back and unload all the salads directly onto their large cutting board so we can keep the bag. Leave the invoice next to the salads. Look for any extra Chez Chrystelle bags to the left of the cutting boards, high up in the corner, on top of the tall refrigerators. The point people at this store are Javier, the manager, and Francesco, who is in charge of ordering."
+  },
+  {
+    "id": "windsor-terrace-food-coop",
+    "type": "store",
+    "storeName": "Windsor Terrace Food Coop",
+    "location": "Windsor Terrace",
+    "aliases": ["windsor terrace coop", "wt coop", "windsor terrace food coop"],
+    "topics": ["delivery", "thursday", "invoice", "phone", "harold"],
+    "facts": {
+      "deliveryWindow": "After 10:00 AM on Thursdays and before 3:00 PM",
+      "frequency": "Every Thursday",
+      "volume": "Usually 16 to 20 salads",
+      "invoice": "No physical invoice; Chrystelle handles it over the phone"
+    },
+    "content": "Deliveries are accepted only after 10:00 AM on Thursdays, and you must arrive before 3:00 PM. Deliveries go here every Thursday. They usually receive 16 to 20 salads. If no one is there, call Harold at +1 (917) 572-4976. Bring the bag inside and help whoever is working unload the salads into one of the refrigerators. Do not leave a physical invoice at this store. Chrystelle handles the invoice over the phone."
+  },
+  {
+    "id": "k-slope",
+    "type": "store",
+    "storeName": "K-Slope",
+    "location": "9th Street",
+    "aliases": ["k-slope", "k slope", "9th street k slope", "kslope"],
+    "topics": ["delivery", "invoice", "information desk", "javier"],
+    "facts": {
+      "opening": "Usually open by 6:30 AM",
+      "frequency": "About once per week",
+      "volume": "About 12 salads",
+      "invoice": "Leave invoice inside the bag at the information desk"
+    },
+    "content": "K-Slope is usually open by 6:30 AM. They order about 12 salads once per week. Leave the bag with the invoice inside it at the information desk, which is past the last cashier. Make sure to tell anyone working there that you are dropping off the salads. The manager's name is Javier, but we do not see him often."
+  },
+  {
+    "id": "mr-mango",
+    "type": "store",
+    "storeName": "Mr. Mango",
+    "location": "Not specified in manual",
+    "aliases": ["mr mango", "mango", "mr. mango"],
+    "topics": ["delivery", "cash", "invoice", "route order", "traffic", "fridge", "jonny", "junah"],
+    "facts": {
+      "hours": "24 hours",
+      "frequency": "4 to 5 days per week",
+      "volume": "Usually 16 to 20 salads",
+      "payment": "Cash right away"
+    },
+    "content": "Mr. Mango is a good stop to do first, since it is the furthest place we deliver to by car and that area gets a lot of traffic starting around 7:00 AM. They are open 24 hours, so you can be as early as you want. They usually order 16 to 20 salads, 4 to 5 days per week. Go past the register and turn left, then right. You will see our fridge around there, in front of the sushi station. We usually unload the salads right there. You can put the bag on the floor, or if there are milk crates nearby that is better. They count the salads to make sure we brought the right amount. We usually hand the invoice to Jonny, who is there most days, or Junah, the owner. Junah is the owner of all of the Mr. stores. They pay cash right away."
+  },
+  {
+    "id": "mr-kiwi",
+    "type": "store",
+    "storeName": "Mr. Kiwi",
+    "location": "Near the kitchen",
+    "aliases": ["mr kiwi", "kiwi", "mr. kiwi"],
+    "topics": ["delivery", "cash", "hours", "route order"],
+    "facts": {
+      "hours": "24 hours",
+      "frequency": "4 to 5 days per week",
+      "volume": "Usually 4 to 12 salads per day",
+      "payment": "Cash right away"
+    },
+    "content": "Mr. Kiwi is easy since it is right near the kitchen. They are open 24 hours. They usually take 4 to 12 salads per day, 4 to 5 days per week. They also pay cash right away. Exact drop-off instructions still need to be added later."
+  },
+  {
+    "id": "mr-beet",
+    "type": "store",
+    "storeName": "Mr. Beet",
+    "location": "Farther away than Mr. Kiwi",
+    "aliases": ["mr beet", "beet", "mr. beet"],
+    "topics": ["delivery", "hours", "route order"],
+    "facts": {
+      "hours": "24 hours"
+    },
+    "content": "Mr. Beet is similar to Mr. Kiwi, but it is far away, so it is better to do it earlier. Mr. Beet is also open 24 hours. Exact delivery frequency, drop-off process, invoice handling, returns handling, and payment details still need to be added later."
+  },
+  {
+    "id": "the-bad-wife",
+    "type": "store",
+    "storeName": "The Bad Wife",
+    "location": "7th Avenue",
+    "aliases": ["bad wife", "the bad wife", "7th ave bad wife"],
+    "topics": ["delivery", "returns", "check", "payment", "bookkeeping"],
+    "facts": {
+      "opening": "Opens at 8:00 AM; someone is usually there by 7:45 AM",
+      "frequency": "Every couple of days",
+      "volume": "Usually 6 to 10 salads",
+      "payment": "Usually take a check about every 5 deliveries, sometimes 10"
+    },
+    "content": "They usually order every couple of days, usually 6 to 10 salads. They open at 8:00 AM, but someone is usually there by 7:45 AM. They will give you back any returns, usually one or two salads. You can just eat them or throw them out. They do very careful bookkeeping. They might ask if you want to take a check, but you can say we will wait until Dave and Chrystelle are back from vacation. We try to take a check every 5 deliveries or so, but sometimes it is 10. Exact drop-off location and invoice handling for this store still need to be added later."
+  },
+  {
+    "id": "key-food-east-village",
+    "type": "store",
+    "storeName": "Key Food East Village",
+    "location": "East Village",
+    "aliases": ["east village key food", "key food east village", "ev key food"],
+    "topics": ["delivery", "subway", "bus", "invoice", "deli counter"],
+    "facts": {
+      "frequency": "2 to 3 times per week",
+      "route": "Usually two bags on the subway; express bus from Delancey-Essex can help",
+      "invoice": "Drop bag and invoice at deli counter"
+    },
+    "content": "They order two to three times per week. We have been taking two bags with us on the subway to get there. There is also an express bus from Delancey-Essex that helps. We have been dropping the bag and invoice at the deli counter, and they handle the rest. Exact timing, contact person, and payment/returns details still need to be added later."
+  },
+  {
+    "id": "prospect-market",
+    "type": "store",
+    "storeName": "Prospect Market",
+    "location": "Prospect Park West and Prospect Avenue",
+    "aliases": ["prospect market", "ppw market"],
+    "topics": ["delivery", "invoice", "shelf"],
+    "facts": {
+      "frequency": "Every couple of days",
+      "volume": "Usually 2 to 4 salads",
+      "invoice": "No invoice needed"
+    },
+    "content": "They usually take 2 to 4 salads every couple of days. Go inside and put them on the bottom shelf right when you walk in on the left-hand side next to the watermelons. No invoice is needed."
+  },
+  {
+    "id": "returns-policy-placeholder",
+    "type": "policy",
+    "storeName": "Returns Policies by Store",
+    "location": "General",
+    "aliases": ["returns", "return policy", "returned salads", "credits"],
+    "topics": ["returns", "policy"],
+    "facts": {},
+    "content": "Returns policy is a little different with every store. This needs to be written up later for each location. Right now, do not assume the return process is the same across stores."
+  }
+]

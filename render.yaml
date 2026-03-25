@@ -1,0 +1,15 @@
+services:
+  - type: web
+    runtime: node
+    name: chez-ops-bot
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: OPENAI_MODEL
+        value: gpt-5.4
+      - key: OPENAI_API_KEY
+        sync: false

@@ -1,0 +1,18 @@
+{
+  "name": "chez-ops-bot-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @chez-ops-bot/server\" \"npm run dev -w @chez-ops-bot/web\"",
+    "dev:server": "npm run dev -w @chez-ops-bot/server",
+    "dev:web": "npm run dev -w @chez-ops-bot/web",
+    "build": "npm run build -w @chez-ops-bot/web",
+    "start": "npm run start -w @chez-ops-bot/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
