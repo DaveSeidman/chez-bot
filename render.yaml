@@ -13,3 +13,11 @@ services:
         value: gpt-5.4
       - key: OPENAI_API_KEY
         sync: false
+      - key: OPS_MANUAL_PATH
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_SESSION_SECRET
+        sync: false
