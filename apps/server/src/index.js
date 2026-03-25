@@ -341,8 +341,9 @@ function prioritizeSelectedStore(docs, selectedStore) {
     return docs;
   }
 
-  const withoutSelectedStore = docs.filter((doc) => doc.id !== selectedStore.id);
-  return [selectedStore, ...withoutSelectedStore].slice(0, 4);
+  const selectedDoc = docs.find((doc) => doc.id === selectedStore.id) || { ...selectedStore, score: 999 };
+  const supportingDocs = docs.filter((doc) => doc.id !== selectedStore.id && doc.type !== 'store');
+  return [selectedDoc, ...supportingDocs].slice(0, 4);
 }
 
 function buildCasualRedirectResponse() {
@@ -547,8 +548,9 @@ app.post('/api/chat', async (req, res) => {
         'Answer only from the provided operational context.',
         'If the question could refer to more than one store in the provided operational context, ask one short clarifying question that names the candidate stores and do not answer the operational question yet.',
         'If the user just answered a clarification question, use that clarification to answer the original operational question.',
+        'When the operational context contains a relevant partial answer, give the useful part directly and briefly note what is not specified in the manual.',
         'Do not invent store policies, route details, timing, invoice rules, returns rules, payment rules, names, or contact information.',
-        'If the answer is incomplete or unclear from the manual, say exactly: I’m not sure from the current manual. Please ask Dave or Chrystelle.',
+        'Only say exactly "I’m not sure from the current manual. Please ask Dave or Chrystelle." when the provided context does not contain a useful grounded answer.',
         'Keep answers short, practical, and operational.',
         'If useful, name the store the answer came from.',
       ].join(' '),
