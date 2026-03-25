@@ -48,6 +48,18 @@ function buildClarificationMeta(candidateStores, originalQuestion) {
   };
 }
 
+function buildStoreAnswerMeta(store, candidateStores = []) {
+  if (!store) {
+    return null;
+  }
+
+  return {
+    type: 'store-answer',
+    storeId: store.id,
+    candidateStoreIds: candidateStores.map((doc) => doc.id),
+  };
+}
+
 function buildClarificationResponse(candidateStores, originalQuestion, intro) {
   return {
     answer: `${intro} ${candidateStores.map(formatStoreLabel).join(' or ')}?`,
@@ -208,17 +220,63 @@ function getPendingClarification(history) {
   }
 
   const meta = lastAssistantMessage.meta;
-  if (!meta || meta.type !== 'store-clarification' || !Array.isArray(meta.candidateStoreIds) || !meta.originalQuestion) {
+  if (meta?.type === 'store-clarification' && Array.isArray(meta.candidateStoreIds) && meta.originalQuestion) {
+    const candidateStores = getDocsByIds(meta.candidateStoreIds);
+    if (!candidateStores.length) {
+      return null;
+    }
+
+    return {
+      originalQuestion: meta.originalQuestion,
+      candidateStores,
+    };
+  }
+
+  const normalizedAssistantText = String(lastAssistantMessage.content || '').toLowerCase();
+  const looksLikeClarificationQuestion =
+    normalizedAssistantText.includes('which one do you mean') ||
+    normalizedAssistantText.includes('which store do you mean') ||
+    normalizedAssistantText.startsWith('which one do you mean:');
+
+  if (!looksLikeClarificationQuestion) {
     return null;
   }
 
-  const candidateStores = getDocsByIds(meta.candidateStoreIds);
-  if (!candidateStores.length) {
+  const candidateStores = loadDocs().filter(
+    (doc) => doc.type === 'store' && normalizedAssistantText.includes(doc.storeName.toLowerCase()),
+  );
+
+  const originalQuestion = [...history.slice(0, -1)].reverse().find((message) => message.role === 'user')?.content;
+  if (!candidateStores.length || !originalQuestion) {
     return null;
   }
 
   return {
-    originalQuestion: meta.originalQuestion,
+    originalQuestion,
+    candidateStores,
+  };
+}
+
+function getRecentStoreAnswer(history) {
+  const assistantMessage = [...history]
+    .reverse()
+    .find((message) => message.role === 'assistant' && message.meta?.type === 'store-answer' && message.meta.storeId);
+
+  if (!assistantMessage) {
+    return null;
+  }
+
+  const [store] = getDocsByIds([assistantMessage.meta.storeId]);
+  if (!store) {
+    return null;
+  }
+
+  const candidateStores = Array.isArray(assistantMessage.meta.candidateStoreIds)
+    ? getDocsByIds(assistantMessage.meta.candidateStoreIds)
+    : [];
+
+  return {
+    store,
     candidateStores,
   };
 }
@@ -226,10 +284,37 @@ function getPendingClarification(history) {
 function buildEffectiveQuestion(message, history) {
   const pendingClarification = getPendingClarification(history);
   if (!pendingClarification) {
+    const recentStoreAnswer = getRecentStoreAnswer(history);
+    const normalizedMessage = String(message || '').toLowerCase();
+
+    if (recentStoreAnswer) {
+      if (/\bother\b/.test(normalizedMessage) && recentStoreAnswer.candidateStores.length === 2) {
+        const alternateStore = recentStoreAnswer.candidateStores.find((doc) => doc.id !== recentStoreAnswer.store.id);
+        if (alternateStore) {
+          return {
+            effectiveQuestion: `${message}\nThe user is referring to ${formatStoreLabel(alternateStore)}.`,
+            selectedStore: alternateStore,
+            pendingClarification: null,
+            relatedCandidateStores: recentStoreAnswer.candidateStores,
+          };
+        }
+      }
+
+      if (/\bit\b|\bthere\b|\bthat one\b|\bthis one\b|\bthat store\b|\bthis store\b/.test(normalizedMessage)) {
+        return {
+          effectiveQuestion: `${message}\nThe user is referring to ${formatStoreLabel(recentStoreAnswer.store)}.`,
+          selectedStore: recentStoreAnswer.store,
+          pendingClarification: null,
+          relatedCandidateStores: recentStoreAnswer.candidateStores,
+        };
+      }
+    }
+
     return {
       effectiveQuestion: message,
       selectedStore: null,
       pendingClarification: null,
+      relatedCandidateStores: [],
     };
   }
 
@@ -239,6 +324,7 @@ function buildEffectiveQuestion(message, history) {
       effectiveQuestion: message,
       selectedStore: null,
       pendingClarification,
+      relatedCandidateStores: pendingClarification.candidateStores,
     };
   }
 
@@ -246,6 +332,7 @@ function buildEffectiveQuestion(message, history) {
     effectiveQuestion: `${pendingClarification.originalQuestion}\nThe user clarified they meant ${formatStoreLabel(selectedStore)}.`,
     selectedStore,
     pendingClarification,
+    relatedCandidateStores: pendingClarification.candidateStores,
   };
 }
 
@@ -380,7 +467,10 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const normalizedHistory = Array.isArray(history) ? history : [];
-    const { effectiveQuestion, selectedStore, pendingClarification } = buildEffectiveQuestion(message, normalizedHistory);
+    const { effectiveQuestion, selectedStore, pendingClarification, relatedCandidateStores } = buildEffectiveQuestion(
+      message,
+      normalizedHistory,
+    );
 
     if (pendingClarification && !selectedStore) {
       return res.json(
@@ -465,8 +555,11 @@ app.post('/api/chat', async (req, res) => {
       input,
     });
 
+    const primaryStore = selectedStore || docs.find((doc) => doc.type === 'store') || null;
+
     res.json({
       answer: response.output_text,
+      meta: buildStoreAnswerMeta(primaryStore, relatedCandidateStores),
       sources: docs.map((doc) => ({
         id: doc.id,
         storeName: doc.storeName,

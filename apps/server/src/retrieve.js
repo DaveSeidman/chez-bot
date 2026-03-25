@@ -105,6 +105,25 @@ function getUniquePhrases(doc) {
   ];
 }
 
+function getUniqueBigrams(doc) {
+  return [
+    ...new Set(
+      [doc.storeName, ...(doc.aliases || [])]
+        .flatMap((text) => {
+          const tokens = tokenizeForMatch(text);
+          const bigrams = [];
+
+          for (let index = 0; index < tokens.length - 1; index += 1) {
+            bigrams.push(tokens.slice(index, index + 2).join(' '));
+          }
+
+          return bigrams;
+        })
+        .filter(Boolean),
+    ),
+  ];
+}
+
 function getUniquePrefixes(doc) {
   return [
     ...new Set(
@@ -149,6 +168,7 @@ function scoreStoreReference(doc, query) {
   const queryTokens = new Set(tokenizeForMatch(query));
   const phrases = getUniquePhrases(doc);
   const prefixes = getUniquePrefixes(doc);
+  const bigrams = getUniqueBigrams(doc);
   const areaKeywords = getInferredAreaKeywords(doc);
 
   let score = 0;
@@ -165,6 +185,12 @@ function scoreStoreReference(doc, query) {
     }
   }
 
+  for (const bigram of bigrams) {
+    if (normalizedQuery.includes(bigram) || compactQuery.includes(compactForMatch(bigram))) {
+      score += 24;
+    }
+  }
+
   for (const keyword of areaKeywords) {
     if (normalizedQuery.includes(keyword) || compactQuery.includes(compactForMatch(keyword))) {
       score += keyword.includes(' ') ? 30 : 16;
@@ -177,6 +203,25 @@ function scoreStoreReference(doc, query) {
 
   for (const token of queryTokens) {
     if (identifyingTokens.has(token)) {
+      score += 4;
+    }
+  }
+
+  return score;
+}
+
+function scoreClarificationReply(doc, query) {
+  const queryTokens = tokenizeForMatch(query);
+  const identifyingTokens = [...getReferenceTokens(doc)];
+  let score = scoreStoreReference(doc, query);
+
+  for (const token of queryTokens) {
+    if (identifyingTokens.includes(token)) {
+      score += 8;
+      continue;
+    }
+
+    if (token.length >= 2 && identifyingTokens.some((identifier) => identifier.startsWith(token) || token.startsWith(identifier))) {
       score += 4;
     }
   }
@@ -245,7 +290,7 @@ export function getDocsByIds(ids) {
 
 export function resolveStoreFromReply(reply, candidateDocs) {
   const scoredDocs = candidateDocs
-    .map((doc) => ({ doc, score: scoreStoreReference(doc, reply) }))
+    .map((doc) => ({ doc, score: scoreClarificationReply(doc, reply) }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score);
 
@@ -254,7 +299,7 @@ export function resolveStoreFromReply(reply, candidateDocs) {
   }
 
   const [topMatch, runnerUp] = scoredDocs;
-  if (topMatch.score < 16) {
+  if (topMatch.score < 8) {
     return null;
   }
 
@@ -289,7 +334,7 @@ export function findAmbiguousStoreMatches(query) {
   const topScore = storeScores[0].referenceScore;
   const ambiguousMatches = storeScores.filter((entry) => topScore - entry.referenceScore <= 8);
 
-  if (topScore < 40 || ambiguousMatches.length < 2) {
+  if (topScore < 32 || ambiguousMatches.length < 2) {
     return [];
   }
 
